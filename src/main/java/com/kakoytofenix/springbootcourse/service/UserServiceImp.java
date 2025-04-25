@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -30,7 +31,11 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public void update(User user) {
-        userDao.update(user);
+        if (getUserById(user.getId()) == null) {
+            throw new NoSuchElementException("Пользователь с ID " + user.getId() + " не найден.");
+        } else {
+            userDao.update(user);
+        }
     }
 
     @Override

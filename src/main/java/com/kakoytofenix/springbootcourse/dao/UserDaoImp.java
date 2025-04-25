@@ -6,7 +6,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+
 
 @Repository
 public class UserDaoImp implements UserDao {
@@ -22,20 +22,13 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void update(User user) {
-        if (getUserById(user.getId()) == null) {
-            throw new NoSuchElementException("Пользователь с ID " + user.getId() + " не найден.");
-        } else {
-            entityManager.merge(user);
-        }
+        entityManager.merge(user);
     }
 
     @Override
     public void save(User user) {
         entityManager.persist(user);
     }
-
-
-
 
     @Override
     public User getUserById(Long id) {
